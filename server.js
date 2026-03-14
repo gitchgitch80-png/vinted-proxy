@@ -69,7 +69,7 @@ function formatItem(item, country, domain) {
   return {
     id: item.id,
     title: item.title,
-    price: parseFloat(item.price),
+    price: parseFloat(item.price) || 0,
     currency: item.currency,
     size: item.size_title || item.size || "—",
     brand: item.brand_title || "—",
@@ -105,7 +105,7 @@ app.get("/search", async (req, res) => {
     }
   }));
 
-  results.sort((a, b) => b.ts - a.ts);
+  results.sort((a, b) => (b.ts || 0) - (a.ts || 0));
   res.json({ total: results.length, items: results, errors: errors.length ? errors : undefined });
 });
 
